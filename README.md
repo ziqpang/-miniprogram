@@ -4,6 +4,10 @@
 
 ## 预览
 
+**首页**
+
+![首页预览](images/preview.png)
+
 | 企划预览界面 | 企划编辑界面 |
 |--------------|--------------|
 | ![企划预览](images/project-preview.png) | ![企划编辑](images/project-edit.png) |
