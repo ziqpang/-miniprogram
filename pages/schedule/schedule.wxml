@@ -1,0 +1,114 @@
+<scroll-view scroll-y="true" class="page-scroll">
+  <view class="section">
+    <view class="section-title-row">
+      <text class="section-title">日期</text>
+    </view>
+    <view class="date-box">
+      <text class="date-text">{{displayDate}}</text>
+    </view>
+  </view>
+
+  <!-- 项目当日待办 -->
+  <view class="section">
+    <view class="section-title-row">
+      <text class="section-title">项目当日待办</text>
+    </view>
+
+    <view class="field">
+      <block wx:if="{{isReadOnly}}">
+        <view class="field-text">
+          <text>{{todo || '—'}}</text>
+        </view>
+      </block>
+      <block wx:else>
+        <textarea
+          class="field-textarea"
+          placeholder="填写当天需要完成的事项"
+          maxlength="200"
+          bindinput="onTodoInput"
+          value="{{todo}}"
+        />
+      </block>
+    </view>
+
+    <!-- 已关联项目：点击完成（勾选后日历该日显示爱心） -->
+    <view class="todo-completed-list">
+      <view
+        wx:for="{{projects}}"
+        wx:key="id"
+        wx:if="{{item.selected}}"
+        class="todo-completed-row"
+      >
+        <text class="todo-completed-name">{{item.projectName}}</text>
+        <view
+          class="todo-completed-btn {{item.completed ? 'completed' : ''}}"
+          catchtap="onToggleCompleted"
+          data-id="{{item.id}}"
+        >
+          <text>{{item.completed ? '已完成' : '点击完成'}}</text>
+        </view>
+      </view>
+      <view wx:if="{{!hasSelectedProject}}" class="todo-completed-empty">
+        <text>请先在下方选择关联项目</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 选择关联项目（支持多选） -->
+  <view class="section">
+    <view class="section-title-row">
+      <text class="section-title">选择关联项目</text>
+      <text class="section-subtitle">可多选</text>
+    </view>
+
+    <view class="project-list">
+      <view
+        wx:for="{{projects}}"
+        wx:key="id"
+        class="project-row"
+        bindtap="onToggleProject"
+        data-id="{{item.id}}"
+      >
+        <view class="project-dot-wrapper">
+          <view
+            class="project-dot {{item.selected ? 'selected' : ''}}"
+            style="background-color: {{item.color}};"
+          ></view>
+        </view>
+        <view class="project-info">
+          <text class="project-name">{{item.projectName}}</text>
+          <text class="project-type">{{item.projectType === 'activity' ? '活动' : '企划'}}</text>
+        </view>
+      </view>
+
+      <view wx:if="{{projects.length === 0}}" class="project-empty">
+        <text>暂无项目，请先在首页新建企划</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-space"></view>
+</scroll-view>
+
+<!-- 有日程时显示“删除当日日程” -->
+<view wx:if="{{hasSchedule}}" class="delete-bar">
+  <text class="delete-btn" bindtap="onDeleteTap">删除当日日程</text>
+</view>
+
+<!-- 底部按钮：只读时显示“编辑”，可编辑时显示“保存” -->
+<view class="save-bar">
+  <view
+    wx:if="{{isReadOnly}}"
+    class="save-btn secondary"
+    bindtap="onEditTap"
+  >
+    编辑
+  </view>
+  <view
+    wx:else
+    class="save-btn"
+    bindtap="onSaveTap"
+  >
+    保存
+  </view>
+</view>

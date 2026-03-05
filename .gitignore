@@ -1,0 +1,22 @@
+# 微信小程序
+project.private.config.json
+
+# 依赖
+node_modules/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 临时与构建
+*.tmp
+*.temp
+dist/

@@ -1,0 +1,213 @@
+.page-scroll {
+  height: 100vh;
+  padding: 24rpx 32rpx 120rpx;
+  box-sizing: border-box;
+  background-color: #f5f5f7;
+}
+
+/* 区块 */
+.section {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 24rpx 24rpx 16rpx;
+  box-shadow: 0 12rpx 32rpx rgba(15, 23, 42, 0.06);
+  margin-bottom: 24rpx;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #111827;
+}
+
+.section-subtitle {
+  font-size: 24rpx;
+  color: #9ca3af;
+}
+
+/* 日期展示 */
+.date-box {
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  background-color: #f9fafb;
+}
+
+.date-text {
+  font-size: 28rpx;
+  color: #111827;
+}
+
+/* 字段 */
+.field {
+  margin-top: 16rpx;
+}
+
+.field-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  background-color: #f9fafb;
+  font-size: 26rpx;
+  box-sizing: border-box;
+}
+
+.field-text {
+  width: 100%;
+  padding: 8rpx 4rpx 4rpx 0;
+  font-size: 26rpx;
+  color: #111827;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+/* 项目列表 */
+.project-list {
+  margin-top: 8rpx;
+}
+
+.project-row {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 4rpx;
+}
+
+.project-dot-wrapper {
+  width: 40rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.project-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  opacity: 0.5;
+  border: 2rpx solid rgba(17, 24, 39, 0.1);
+}
+
+.project-dot.selected {
+  opacity: 1;
+  box-shadow: 0 0 0 4rpx rgba(17, 24, 39, 0.08);
+}
+
+.project-info {
+  margin-left: 12rpx;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.project-name {
+  font-size: 28rpx;
+  color: #111827;
+}
+
+.project-type {
+  font-size: 22rpx;
+  color: #9ca3af;
+  margin-left: 8rpx;
+}
+
+/* 项目当日待办栏：已关联项目的「点击完成」列表 */
+.todo-completed-list {
+  margin-top: 20rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f3f4f6;
+}
+
+.todo-completed-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx 0;
+}
+
+.todo-completed-name {
+  font-size: 26rpx;
+  color: #4b5563;
+}
+
+.todo-completed-btn {
+  padding: 6rpx 14rpx;
+  font-size: 22rpx;
+  color: #9ca3af;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 999rpx;
+}
+
+.todo-completed-btn.completed {
+  color: #dc2626;
+  border-color: #fecaca;
+  background-color: #fef2f2;
+}
+
+.todo-completed-empty {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #9ca3af;
+}
+
+.project-empty {
+  padding: 12rpx 0 4rpx;
+  font-size: 24rpx;
+  color: #9ca3af;
+}
+
+.bottom-space {
+  height: 40rpx;
+}
+
+/* 删除当日日程（有日程时显示在保存按钮上方） */
+.delete-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(120rpx + env(safe-area-inset-bottom));
+  padding: 12rpx 32rpx;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: rgba(245, 245, 247, 0.96);
+}
+
+.delete-btn {
+  font-size: 28rpx;
+  color: #dc2626;
+}
+
+/* 底部按钮条 */
+.save-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8rpx 32rpx calc(16rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background-color: rgba(245, 245, 247, 0.96);
+  box-shadow: 0 -4rpx 12rpx rgba(15, 23, 42, 0.06);
+  display: flex;
+}
+
+.save-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border-radius: 999rpx;
+  background-color: #111827;
+  color: #f9fafb;
+  font-size: 30rpx;
+}
+
+.save-btn.secondary {
+  background-color: #ffffff;
+  color: #111827;
+  border: 1rpx solid #d1d5db;
+}

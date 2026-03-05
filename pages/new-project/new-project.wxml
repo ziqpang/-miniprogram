@@ -1,0 +1,252 @@
+<scroll-view scroll-y="true" class="page-scroll">
+
+<!-- 基础信息：左封面，右类型 + 名称，下方简介/备注 -->
+<view class="section">
+  <view class="section-title-row">
+    <text class="section-title">基础信息</text>
+  </view>
+
+  <view class="base-top-row">
+    <!-- 封面：左侧正方形 -->
+    <view class="base-cover" bindtap="onChooseCover">
+      <image
+        wx:if="{{coverImage}}"
+        class="base-cover-image"
+        src="{{coverImage}}"
+        mode="aspectFill"
+      />
+      <view wx:else class="base-cover-placeholder">
+        <text class="plus">+</text>
+        <text class="hint">上传封面图</text>
+      </view>
+
+      <!-- 企划颜色条 -->
+      <view
+        wx:if="{{color}}"
+        class="base-color-tag"
+        style="background-color: {{color}};"
+      ></view>
+    </view>
+
+    <!-- 右侧：类型 + 项目名称 -->
+    <view class="base-right">
+      <view class="field">
+        <text class="field-label">类型</text>
+        <view class="type-tags">
+          <view
+            class="type-tag {{projectType === 'plan' ? 'active' : ''}}"
+            data-type="plan"
+            bindtap="onTypeChange"
+          >
+            企划
+          </view>
+          <view
+            class="type-tag {{projectType === 'activity' ? 'active' : ''}}"
+            data-type="activity"
+            bindtap="onTypeChange"
+          >
+            活动
+          </view>
+        </view>
+      </view>
+
+      <view class="field">
+        <text class="field-label">项目名称</text>
+        <input
+          class="field-input"
+          placeholder="请输入项目名称"
+          maxlength="30"
+          bindinput="onNameInput"
+          value="{{projectName}}"
+          disabled="{{isReadOnly}}"
+        />
+      </view>
+
+      <!-- 项目标记：编辑时显示色盘，保存后只显示「项目标记」+ 小圆点 -->
+      <view class="field">
+        <block wx:if="{{isReadOnly}}">
+          <view class="project-tag-row">
+            <text class="field-label field-label-inline">项目标记</text>
+            <view
+              wx:if="{{projectColor}}"
+              class="project-tag-dot"
+              style="background-color: {{projectColor}};"
+            ></view>
+            <text wx:else class="field-text-inline">—</text>
+          </view>
+        </block>
+        <block wx:else>
+          <text class="field-label">项目标记</text>
+          <view class="color-picker-free">
+            <view class="color-picker-preview" style="background-color: {{projectColor}};"></view>
+            <view class="color-picker-sliders">
+              <view class="color-picker-row">
+                <text class="color-picker-label">色相</text>
+                <slider min="0" max="360" value="{{pickerHue}}" step="1" activeColor="#8b5cf6" block-size="20" bindchange="onPickerHueChange"/>
+                <text class="color-picker-value">{{pickerHue}}</text>
+              </view>
+              <view class="color-picker-row">
+                <text class="color-picker-label">饱和度</text>
+                <slider min="0" max="100" value="{{pickerSat}}" step="1" activeColor="#8b5cf6" block-size="20" bindchange="onPickerSatChange"/>
+                <text class="color-picker-value">{{pickerSat}}</text>
+              </view>
+              <view class="color-picker-row">
+                <text class="color-picker-label">明度</text>
+                <slider min="0" max="100" value="{{pickerLight}}" step="1" activeColor="#8b5cf6" block-size="20" bindchange="onPickerLightChange"/>
+                <text class="color-picker-value">{{pickerLight}}</text>
+              </view>
+            </view>
+            <text class="color-picker-hex">{{projectColor}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 项目简介：只读时为文字，编辑/新建时为多行输入 -->
+  <view class="field">
+    <text class="field-label">项目简介</text>
+
+    <block wx:if="{{isReadOnly}}">
+      <view class="field-text">
+        <text>{{projectIntro || '—'}}</text>
+      </view>
+    </block>
+
+    <block wx:else>
+      <textarea
+        class="field-textarea"
+        placeholder="一句话介绍这个项目"
+        maxlength="120"
+        bindinput="onIntroInput"
+        value="{{projectIntro}}"
+      />
+    </block>
+  </view>
+
+  <!-- 项目备注：只读时为文字，编辑/新建时为多行输入 -->
+  <view class="field">
+    <text class="field-label">项目备注</text>
+
+    <block wx:if="{{isReadOnly}}">
+      <view class="field-text">
+        <text>{{projectNote || '—'}}</text>
+      </view>
+    </block>
+
+    <block wx:else>
+      <textarea
+        class="field-textarea"
+        placeholder="记录内部联系信息或补充说明"
+        maxlength="200"
+        bindinput="onNoteInput"
+        value="{{projectNote}}"
+      />
+    </block>
+  </view>
+
+  <!-- 详情模式下显示编辑按钮 -->
+  <view wx:if="{{isReadOnly}}" class="edit-bar">
+    <view class="edit-btn" bindtap="onEditTap">
+      编辑
+    </view>
+  </view>
+</view>
+
+<!-- 当前节点 -->
+<view class="section">
+  <view class="section-title-row">
+    <text class="section-title">当前节点</text>
+  </view>
+
+  <view class="node-tags">
+    <view
+      wx:for="{{nodes}}"
+      wx:key="value"
+      class="node-tag {{currentNode === item.value ? 'active' : ''}}"
+      data-value="{{item.value}}"
+      bindtap="onNodeTap"
+    >
+      {{item.label}}
+    </view>
+  </view>
+</view>
+
+<!-- 制品：左图右进度 -->
+<view class="section">
+  <view class="section-title-row">
+    <text class="section-title">制品</text>
+    <text class="section-subtitle">最多 8 个制品</text>
+  </view>
+
+  <view class="product-list">
+    <view
+      class="product-card"
+      wx:for="{{products}}"
+      wx:key="index"
+    >
+      <view class="product-card-row">
+        <!-- 左侧：正方形图片 -->
+        <view
+          class="product-image-wrapper"
+          bindtap="onChooseProductImage"
+          data-index="{{index}}"
+        >
+          <image
+            wx:if="{{item.image}}"
+            class="product-image"
+            src="{{item.image}}"
+            mode="aspectFill"
+          />
+          <view wx:else class="product-placeholder">
+            <text class="plus">+</text>
+            <text class="hint">上传制品图</text>
+          </view>
+        </view>
+
+        <!-- 右侧：进度选择 -->
+        <view class="product-right">
+          <text class="field-label">当前进度</text>
+          <picker
+            mode="selector"
+            range="{{productProgressOptions}}"
+            value="{{item.progressIndex || 0}}"
+            data-index="{{index}}"
+            bindchange="onProductProgressChange"
+            disabled="{{isReadOnly}}"
+          >
+            <view class="product-progress-value">
+              {{item.progress || productProgressOptions[0]}}
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+    <view
+      wx:if="{{products.length < 8}}"
+      class="product-add"
+      bindtap="onAddProduct"
+    >
+      <text class="plus">+</text>
+      <text class="hint">新增制品</text>
+    </view>
+  </view>
+</view>
+
+<view class="bottom-space"></view>
+</scroll-view>
+
+<!-- 底部保存按钮：仅编辑/新建时显示 -->
+<view wx:if="{{!isReadOnly}}" class="save-bar">
+  <view class="save-btn" bindtap="onSaveTap">
+    保存
+  </view>
+</view>
+
+<!-- 已新建企划的底部：删除企划（仅查看模式显示） -->
+<view wx:if="{{isReadOnly}}" class="delete-bar">
+  <view class="delete-btn" bindtap="onDeleteProjectTap">
+    删除企划
+  </view>
+</view>

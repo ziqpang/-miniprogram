@@ -1,0 +1,145 @@
+<view class="container">
+
+<!-- 月历一览 -->
+<view class="section-header">
+  <text class="section-title">月历一览</text>
+  <text class="section-subtitle">上滑切换本月 / 下月</text>
+</view>
+
+<view class="calendar-section">
+  <swiper
+    class="month-swiper"
+    vertical="true"
+    circular="false"
+    indicator-dots="true"
+    indicator-color="#E5E7EB"
+    indicator-active-color="#111827"
+    autoplay="false"
+    duration="300"
+  >
+    <swiper-item wx:for="{{months}}" wx:key="index" wx:for-item="month">
+      <view class="month-card">
+        <view class="month-header">
+          <view>
+            <text class="month-title">{{month.title}}</text>
+            <text class="month-subtitle">{{month.subtitle}}</text>
+          </view>
+          <view class="month-tag">{{month.tag}}</view>
+        </view>
+
+        <!-- 星期标题 -->
+        <view class="week-header">
+          <text
+            wx:for="{{weekDays}}"
+            wx:key="index"
+            wx:for-item="wd"
+            class="week-item"
+          >
+            {{wd}}
+          </text>
+        </view>
+
+        <!-- 日期网格 -->
+        <view class="day-grid">
+          <view
+            wx:for="{{month.days}}"
+            wx:key="index"
+            wx:for-item="day"
+            class="day-cell {{day.isCurrentMonth ? 'day-current-month' : 'day-other-month'}}"
+            bindtap="onDayTap"
+            data-date="{{day.fullDate}}"
+          >
+            <view
+              class="day-inner"
+              style="background-color: {{day.dateBgColor || (day.isCurrentMonth ? '#f9fafb' : 'transparent')}};"
+            >
+              <text class="day-number">{{day.date}}</text>
+              <view wx:if="{{day.showHeart}}" class="day-heart-dot"></view>
+              <view wx:if="{{day.showNoProjectDot}}" class="day-dot-no-project"></view>
+            </view>
+          </view>
+        </view>
+
+        <view class="month-footer">
+          <text class="month-hint">● 为当月企划/活动节点</text>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>
+
+<!-- 企划封面 -->
+<view class="section-header">
+  <text class="section-title">企划封面</text>
+  <text class="section-subtitle">最多 9 个项目</text>
+</view>
+
+<view class="cover-section">
+  <view class="cover-grid">
+    <!-- 已有企划 -->
+    <view
+      class="cover-item"
+      wx:for="{{covers}}"
+      wx:key="index"
+      bindtap="onProjectTap"
+      data-index="{{index}}"
+    >
+      <view class="cover-square">
+        <!-- 左上角三角（有颜色时显示） -->
+        <view
+          wx:if="{{item.color}}"
+          class="cover-ribbon"
+          style="border-top-color: {{item.color}};"
+        ></view>
+        <image
+          wx:if="{{item.src}}"
+          class="cover-image"
+          src="{{item.src}}"
+          mode="aspectFill"
+        />
+        <view wx:else class="cover-placeholder">
+          <text class="cover-plus">+</text>
+        </view>
+        <!-- 右下角：项目目前进度 -->
+        <view class="cover-progress">{{item.progressLabel}}</view>
+      </view>
+
+      <view class="cover-label-row">
+        <text class="cover-label">
+          {{item.label || '项目'}}
+        </text>
+      </view>
+      <!-- 项目标记：用户所选颜色 -->
+      <view wx:if="{{item.color}}" class="cover-tag-row">
+        <view
+          class="cover-tag-dot"
+          style="background-color: {{item.color}};"
+        ></view>
+      </view>
+    </view>
+
+    <!-- 仅保留一个 + 号，用于新建 -->
+    <view
+      wx:if="{{covers.length < 9}}"
+      class="cover-item"
+    >
+      <view
+        class="cover-square"
+        bindtap="onAddProjectTap"
+      >
+        <view class="cover-placeholder">
+          <text class="cover-plus">+</text>
+        </view>
+      </view>
+      <view class="cover-label-row">
+        <text class="cover-label cover-label-sm">新建项目</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="cover-tip">
+    <text>每个企划带有颜色标记，用于在日历与详情中区分</text>
+  </view>
+</view>
+
+</view>
