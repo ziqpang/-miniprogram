@@ -4,17 +4,9 @@
 
 ## 预览
 
-**首页**
-
-![首页预览](images/preview.png)
-
-| 企划预览界面 | 企划编辑界面 |
-|--------------|--------------|
-| ![企划预览](images/project-preview.png) | ![企划编辑](images/project-edit.png) |
-
-| 日程预览界面 | 日程编辑界面 |
-|--------------|--------------|
-| ![日程预览](images/schedule-preview.png) | ![日程编辑](images/schedule-edit.png) |
+| 首页 | 企划预览 | 企划编辑 | 日程预览 | 日程编辑 |
+|------|----------|----------|----------|----------|
+| ![首页](images/preview.png) | ![企划预览](images/project-preview.png) | ![企划编辑](images/project-edit.png) | ![日程预览](images/schedule-preview.png) | ![日程编辑](images/schedule-edit.png) |
 
 ## 功能概览
 
